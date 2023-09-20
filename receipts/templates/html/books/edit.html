@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+<form action="{{ url_for('book_patch', id=book.id) }}" method="post">
+    <div>
+      <p>
+      <label>Новое название</label>
+          <input type="text" name="name" value="{{ book.name }}">
+      {% if errors %}
+          <div>{{ errors.name }}</div>
+      {% endif %}
+      </p>
+      <p>
+        <label>Перечислите через пробел ингредиенты</label>
+          <input type="text" name="ingredients" value="{{ book.ingredients }}">
+        {% if errors %}
+        <div>{{ errors.name }}</div>
+        {% endif %}
+      </p>
+      <p>
+        <label>Новая ссылка на фотографию</label>
+          <input type="url" name="image" value="{{ book.image }}">
+        {% if errors %}
+        <div>{{ errors.name }}</div>
+        {% endif %}
+      </p>
+      <p>
+      <label>Новое описание</label>
+      
+      <textarea rows="6" name="summary" value="{{ book.summary }}">{{ book.summary}}</textarea>
+      </p>
+        {% if errors %}
+          <div>{{ errors.summary }}</div>
+        {% endif %}
+      </div>
+
+    <input type="submit" value="Update">
+</form>

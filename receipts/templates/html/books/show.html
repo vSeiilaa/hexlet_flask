@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+
+        <title>{{ book.name }}</title>
+    </head>
+    <header>
+        <nav>
+            <!-- Меню -->
+            <ul>
+                <li><img src="https://i.ibb.co/9t5XjHY/photo-2022-07-30-21-15-32.jpg" alt="Логотип" width="37.19" height="37.19"> </li>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/books">Книга рецептов</a></li>
+                <li><a href="{{ url_for('book_create') }}" >Новый рецепт</a></li>
+                </li>
+            </ul>
+        </nav>
+            <h1>Большая книга рецептов</h1>
+        <p>Сборник любимых рецептов Большой Жабки</p>
+            <!-- Логотип сайта -->
+    </header>
+    <body>
+        <!-- Flash message -->
+        {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+            <h3 class="{{ category }}">{{ message }}</h3>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <main>
+            <h1>{{ book.name }} </h1>
+            <img src="{{ book.image }}" alt="{{ book.name }}"/>
+            <table>
+                <tr>
+                    <td>Автор блюда: {{ author.name }}</td>
+                </tr>
+                <tr>
+                    <td>Ингредиенты: {{ book.ingredients }} </td> 
+                </tr>
+            </table>
+            <h3>Инструкция приготовления</h3>
+            <p class="recipe">{{ book.summary }}</p>
+        {% if current_user.id == book.user%}
+        <div class="editing_menu">
+            <h3>Панель управления</h3>
+            <nav>
+                <!-- Меню -->
+                <form action="{{ url_for('book_edit', id=book.id) }}" method="get">
+                    <input type="submit" value="Изменить рецепт">
+                </form>
+                <form action="{{ url_for('book_delete', id=book.id) }}" method="post" 
+                onsubmit="return confirm('Вы уверены, что хотите удалить рецепт? Это действие нельзя обратить.')">
+                    <input type="submit" value="Удалить рецепт">
+                </form>
+            </nav>
+        {% endif %}
+        </div>
+    </main>
+    </body>
+
+<style>
+    .recipe {
+        white-space: pre-wrap;
+        }
+</style>

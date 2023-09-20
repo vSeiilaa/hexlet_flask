@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Любимые рецепты</title>
+        <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    </head>
+    <body>
+        <header>
+            <!-- Flash message -->
+            {% if messages %}
+            <ul class=flashes>
+                {% for category, message in messages %}
+                <h3 class="{{ category }}">{{ message }}</h3>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <nav>
+                <!-- Меню -->
+                <ul>
+                    <li>
+                        <a href="{{ url_for('user_get', id=1)}}">логин</a>
+                    </li>
+                    <li><a href="/books">Книга рецептов</a></li>
+                    <li><a href="{{ url_for('book_create') }}" >Новый рецепт</a></li>
+                    <li><form action="/books" method="get">
+                        <input type="search" name="term" value="{{ search }}" />
+                        <input type="submit" value="Найти" />
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+                <h1>Большая книга рецептов</h1>
+            <p>Сборник любимых рецептов Большой Жабки</p>
+        </header>
+        <main class="content">
+            <h2>Рецепты</h2>
+            <ul>
+                {% for book, author in iterables %}
+                    {% include "html/books/pos.html" %}
+                    <br>
+                {% endfor %}
+            </ul>
+        </main>
+    </body>
+</html>
+

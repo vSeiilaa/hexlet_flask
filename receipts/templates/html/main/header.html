@@ -1,0 +1,21 @@
+<header>
+    <nav>
+        <!-- Меню -->
+        <ul>
+            <li>
+                <a href="{{ url_for('user_get', id=user.id)}}">
+                    <img src="{{ current_user.image }}" alt="Логотип" width="40" height="40">
+                </a>
+            </li>
+            <li><a href="/books">Книга рецептов</a></li>
+            <li><a href="{{ url_for('book_create') }}" >Новый рецепт</a></li>
+            <li><form action="/books" method="get">
+                <input type="search" name="term" value="{{ search }}" />
+                <input type="submit" value="Найти" />
+                </form>
+            </li>
+        </ul>
+    </nav>
+        <h1>Большая книга рецептов</h1>
+    <p>Сборник любимых рецептов Большой Жабки</p>
+</header>

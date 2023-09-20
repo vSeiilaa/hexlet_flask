@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>Книга рецептов Большой Жабки</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+
+  </head>
+
+  <body>
+    <header>
+      <!-- Flash message -->
+      {% if messages %}
+      <ul class=flashes>
+          {% for category, message in messages %}
+          <h3 class="{{ category }}">{{ message }}</h3>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      <nav>
+          <!-- Меню -->
+          <ul>
+              <li><img src="https://i.ibb.co/9t5XjHY/photo-2022-07-30-21-15-32.jpg" alt="Логотип" width="37.19" height="37.19"> </li>
+              <li><a href="/">Главная</a></li>
+              <li><a href="/books">Книга рецептов</a></li>
+              <li><a href="{{ url_for('book_create') }}" >Настройки</a></li>
+              </li>
+          </ul>
+      </nav>
+          <h1>Большая книга рецептов</h1>
+      <p>Сборник любимых рецептов Большой Жабки</p>
+  </header>
+
+    <main>
+      {% if not current_user %}
+      <h2>Открой мир рецептов с нами &#127752; </h2>
+
+      {% include "html/main/login.html" %}
+
+      {% else %}
+      <h2>Привет {{ current_user['name'] }} &#128075;</h2>
+      <h3>Что готовим сегодня?</h3>
+      <form action="{{ url_for('books_get') }}" method="get">
+        <input type="submit" value="Посмотреть рецепты">
+      </form>
+        <b> Хочешь выйти? Жми кнопку ниже</b>
+        <form action="/session/delete" method="post">
+          <input type="submit" value="Выйти">
+        </form>
+    {% endif %}
+
+    </main>
+  </body>
+</html>

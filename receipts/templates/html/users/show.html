@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+
+        <title>{{ user.name }}</title>
+    </head>
+    <header>
+        <!-- Flash message -->
+        {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+            <h3 class="{{ category }}">{{ message }}</h3>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <nav>
+            <!-- Меню -->
+            <ul>
+                <li>
+                    <a href="{{ url_for('user_get', id=user.id)}}">
+                        <img src="{{ user.image }}" alt="{{ user.name }}" width="40" height="40">
+                    </a>
+                </li>
+                <li><a href="/books">Книга рецептов</a></li>
+                <li><a href="{{ url_for('book_create') }}" >Новый рецепт</a></li>
+                <li><form action="/books" method="get">
+                    <input type="search" name="term" value="{{ search }}" />
+                    <input type="submit" value="Найти" />
+                    </form>
+                </li>
+            </ul>
+        </nav>
+            <h1>Большая книга рецептов</h1>
+        <p>Сборник любимых рецептов Большой Жабки</p>
+    </header>
+    <body>
+        <!-- Flash message -->
+        {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+            <h3 class="{{ category }}">{{ message }}</h3>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <main>
+            <h1>{{ user.name }} </h1>
+            <img src="{{ user.image }}" alt="{{ user.name }}" width="10                                                                          0" height="100"/>
+
+            <main class="content">
+                <h2>Об авторе</h2>
+                <p class="recipe">{{ user.summary }}</p>
+
+                <h2>Рецепты автора</h2>
+                <ul>
+                    {% for book in books %}
+                        {% include "html/books/pos.html" %}
+                        <br>
+                    {% endfor %}
+                </ul>
+            </main>
+        {% if current_user.id == user.id%}
+        <div class="editing_menu">
+            <h3>Панель управления</h3>
+            <b> Хочешь выйти? Жми кнопку ниже</b>
+            <form action="/session/delete" method="post">
+                <input type="submit" value="Выйти">
+            </form>
+
+        {% endif %}
+        </div>
+    </main>
+    </body>
+
+<style>
+    .recipe {
+        white-space: pre-wrap;
+        }
+</style>

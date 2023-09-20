@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>Книга рецептов Большой Жабки</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+
+  </head>
+
+  <body>
+    <header>
+      <!-- Flash message -->
+      {% if messages %}
+      <ul class=flashes>
+          {% for category, message in messages %}
+          <h3 class="{{ category }}">{{ message }}</h3>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      <nav>
+          <!-- Меню -->
+          <ul>
+              <li><img src="https://i.ibb.co/9t5XjHY/photo-2022-07-30-21-15-32.jpg" alt="Логотип" width="37.19" height="37.19"> </li>
+              <li><a href="/">Главная</a></li>
+              <li><a href="/books">Книга рецептов</a></li> 
+          </ul>
+      </nav>
+          <h1>Привет {{ user.name }} &#128075;</h1>
+      <p>Это ваш личный кабинет</p>
+  </header>
+
+  <form action="{{ url_for('user_patch', id=user.id) }}" method="post">
+    <div>
+      <p>
+      <label>Новое имя</label>
+          <input type="text" name="name" value="{{ user.name }}">
+      {% if errors %}
+          <div>{{ errors.name }}</div>
+      {% endif %}
+      </p>
+      <p>
+        <label>Новый пароль</label>
+          <input type="text" name="password" value="">
+        {% if errors %}
+        <div>{{ errors.password }}</div>
+        {% endif %}
+      </p>
+      <p>
+        <label>Новая ссылка на фотографию</label>
+          <input type="url" name="image" value="">
+        {% if errors %}
+        <div>{{ errors.image }}</div>
+        {% endif %}
+      </p>
+      <p>
+      <label>О себе</label>
+      
+      <textarea rows="6" name="summary" value="{{ user.summary }}"></textarea>
+      </p>
+        {% if errors %}
+          <div>{{ errors.summary }}</div>
+        {% endif %}
+      </div>
+
+    <input type="submit" value="Update">
+  </form>
+  </body>
+</html>
